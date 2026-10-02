@@ -1,0 +1,141 @@
+.cabecalho {
+  width: 100%;
+  min-height: 76px;
+  padding: 0 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+
+  box-sizing: border-box;
+
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid #eeeeee;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* Nome da plataforma */
+
+.cabecalho h1 {
+  margin: 0;
+
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 3px;
+
+  color: #111111;
+
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.cabecalho h1:hover {
+  opacity: 0.65;
+}
+
+/* Zona da pesquisa */
+
+.cabecalho > div:nth-child(2) {
+  flex: 1;
+  max-width: 620px;
+}
+
+.cabecalho input {
+  width: 100%;
+  height: 44px;
+
+  padding: 0 18px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+
+  background: #f7f7f7;
+
+  color: #111111;
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cabecalho input::placeholder {
+  color: #888888;
+}
+
+.cabecalho input:focus {
+  background: #ffffff;
+  border-color: #111111;
+
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Botões */
+
+.cabecalho button {
+  height: 42px;
+
+  padding: 0 16px;
+
+  margin-left: 8px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #111111;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cabecalho button:hover {
+  background: #2a2a2a;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+}
+
+.cabecalho button:active {
+  transform: translateY(0);
+}
+
+/* Ecrãs mais pequenos */
+
+@media (max-width: 800px) {
+  .cabecalho {
+    padding: 14px 20px;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .cabecalho > div:nth-child(2) {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .cabecalho input {
+    width: 100%;
+  }
+}
+
