@@ -1,16 +1,21 @@
+import { useNavigate } from 'react-router-dom'
 import Cabecalho from '../componentes/cabecalho'
 import Categorias from '../componentes/categorias'
 import Produtos from '../componentes/produtos'
 import './pagina-inicial.css'
 
 function PaginaInicial() {
+  const navigate = useNavigate()
+
   return (
     <>
       <Cabecalho />
 
       <main>
         <section className="destaque-principal">
-          <p className="destaque-pequeno">BEM-VINDO À CIPHER</p>
+          <p className="destaque-pequeno">
+            BEM-VINDO À CIPHER
+          </p>
 
           <h2>
             Descobre.
@@ -24,7 +29,10 @@ function PaginaInicial() {
             Milhares de produtos. Uma nova forma de comprar.
           </p>
 
-          <button className="botao-destaque">
+          <button
+            className="botao-destaque"
+            onClick={() => navigate('/loja')}
+          >
             Explorar produtos
           </button>
         </section>
