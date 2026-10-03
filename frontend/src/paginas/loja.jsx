@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Cabecalho from '../componentes/cabecalho'
 import './loja.css'
 
@@ -18,7 +19,11 @@ function Loja() {
         </section>
 
         <section className="produtos-grelha">
-          <article className="produto-card">
+
+          <Link
+            to="/produto/cipher-air-pro"
+            className="produto-card"
+          >
             <div className="produto-card-imagem">
               <img
                 src="/imagens/cipher-air-pro.png"
@@ -28,9 +33,52 @@ function Loja() {
 
             <div className="produto-card-info">
               <h2>CIPHER Air Pro</h2>
-              <p>149,99 €</p>
+              <p>29,99 €</p>
             </div>
-          </article>
+          </Link>
+
+          <Link
+            to="/produto/urban-essential-hoodie"
+            className="produto-card"
+          >
+            <div className="produto-card-imagem produto-card-emoji">
+              👕
+            </div>
+
+            <div className="produto-card-info">
+              <h2>Urban Essential Hoodie</h2>
+              <p>34,99 €</p>
+            </div>
+          </Link>
+
+          <Link
+            to="/produto/cipher-mechanical-x"
+            className="produto-card"
+          >
+            <div className="produto-card-imagem produto-card-emoji">
+              ⌨️
+            </div>
+
+            <div className="produto-card-info">
+              <h2>CIPHER Mechanical X</h2>
+              <p>59,99 €</p>
+            </div>
+          </Link>
+
+          <Link
+            to="/produto/glow-smart-lamp"
+            className="produto-card"
+          >
+            <div className="produto-card-imagem produto-card-emoji">
+              💡
+            </div>
+
+            <div className="produto-card-info">
+              <h2>Glow Smart Lamp</h2>
+              <p>24,99 €</p>
+            </div>
+          </Link>
+
         </section>
       </main>
     </>

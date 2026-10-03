@@ -10,11 +10,12 @@
 .produtos-intro p {
   letter-spacing: 4px;
   font-weight: 700;
+  margin-bottom: 20px;
 }
 
 .produtos-intro h1 {
   font-size: 64px;
-  margin: 20px 0;
+  margin: 0 0 20px;
 }
 
 .produtos-intro span {
@@ -23,8 +24,10 @@
 
 .produtos-grelha {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .produto-card {
@@ -32,28 +35,78 @@
   border-radius: 20px;
   overflow: hidden;
   background: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.produto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .produto-card-imagem {
+  height: 300px;
   padding: 30px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f7f7;
 }
 
 .produto-card-imagem img {
   width: 100%;
-  max-width: 300px;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
+}
+
+.produto-card-emoji {
+  font-size: 100px;
 }
 
 .produto-card-info {
-  padding: 20px 30px 30px;
+  padding: 25px 30px 30px;
 }
 
 .produto-card-info h2 {
   margin: 0 0 10px;
+  font-size: 22px;
 }
 
 .produto-card-info p {
+  margin: 0;
   font-size: 20px;
   font-weight: 700;
+}
+
+/* Tablets */
+@media (max-width: 1000px) {
+  .produtos-grelha {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .produtos-intro h1 {
+    font-size: 48px;
+  }
+}
+
+/* Telemóveis */
+@media (max-width: 600px) {
+  .pagina-produtos {
+    padding: 50px 20px;
+  }
+
+  .produtos-grelha {
+    grid-template-columns: 1fr;
+  }
+
+  .produtos-intro h1 {
+    font-size: 38px;
+  }
+
+  .produtos-intro span {
+    font-size: 17px;
+  }
+}
+.produto-card {
+  color: inherit;
+  text-decoration: none;
 }

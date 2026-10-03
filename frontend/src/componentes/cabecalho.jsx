@@ -1,10 +1,16 @@
+import { Link } from 'react-router-dom'
+import { useCarrinho } from '../contextos/CarrinhoContext'
 import './cabecalho.css'
 
 function Cabecalho() {
+  const { carrinho } = useCarrinho()
+
   return (
     <header className="cabecalho">
       <div>
-        <h1>CIPHER</h1>
+        <Link to="/" className="logo-cipher">
+          <h1>CIPHER</h1>
+        </Link>
       </div>
 
       <div>
@@ -16,7 +22,18 @@ function Cabecalho() {
 
       <div>
         <button>Entrar</button>
-        <button>🛒 Carrinho</button>
+
+        <Link
+          to="/carrinho"
+          className="botao-carrinho-header"
+        >
+          🛒 Carrinho
+          {carrinho.length > 0 && (
+            <span className="contador-carrinho">
+              {carrinho.length}
+            </span>
+          )}
+        </Link>
       </div>
     </header>
   )
