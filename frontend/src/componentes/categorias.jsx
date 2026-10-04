@@ -1,6 +1,13 @@
+import { useNavigate } from 'react-router-dom'
 import './categorias.css'
 
 function Categorias() {
+  const navigate = useNavigate()
+
+  function escolherCategoria(categoria) {
+    navigate(`/loja?categoria=${encodeURIComponent(categoria)}`)
+  }
+
   return (
     <section className="categorias">
       <div className="categorias-cabecalho">
@@ -9,14 +16,37 @@ function Categorias() {
       </div>
 
       <div className="categorias-lista">
-        <button>Moda</button>
-        <button>Tecnologia</button>
-        <button>Casa</button>
-        <button>Beleza</button>
-        <button>Gaming</button>
-        <button>Desporto</button>
-        <button>Acessórios</button>
-        <button>Ver tudo</button>
+        <button onClick={() => escolherCategoria('Moda')}>
+          Moda
+        </button>
+
+        <button onClick={() => escolherCategoria('Tecnologia')}>
+          Tecnologia
+        </button>
+
+        <button onClick={() => escolherCategoria('Casa')}>
+          Casa
+        </button>
+
+        <button onClick={() => escolherCategoria('Beleza')}>
+          Beleza
+        </button>
+
+        <button onClick={() => escolherCategoria('Gaming')}>
+          Gaming
+        </button>
+
+        <button onClick={() => escolherCategoria('Desporto')}>
+          Desporto
+        </button>
+
+        <button onClick={() => escolherCategoria('Acessórios')}>
+          Acessórios
+        </button>
+
+        <button onClick={() => navigate('/loja')}>
+          Ver tudo
+        </button>
       </div>
     </section>
   )

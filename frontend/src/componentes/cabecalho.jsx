@@ -1,9 +1,27 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { useCarrinho } from '../contextos/CarrinhoContext'
 import './cabecalho.css'
 
 function Cabecalho() {
+  const [pesquisa, setPesquisa] = useState('')
+
+  const navigate = useNavigate()
+
   const { carrinho } = useCarrinho()
+
+  function alterarPesquisa(evento) {
+    const texto = evento.target.value
+
+    setPesquisa(texto)
+
+    if (texto.trim() === '') {
+      navigate('/loja')
+      return
+    }
+
+    navigate(`/loja?pesquisa=${encodeURIComponent(texto)}`)
+  }
 
   return (
     <header className="cabecalho">
@@ -17,6 +35,8 @@ function Cabecalho() {
         <input
           type="text"
           placeholder="Pesquisar produtos..."
+          value={pesquisa}
+          onChange={alterarPesquisa}
         />
       </div>
 
@@ -28,6 +48,7 @@ function Cabecalho() {
           className="botao-carrinho-header"
         >
           🛒 Carrinho
+
           {carrinho.length > 0 && (
             <span className="contador-carrinho">
               {carrinho.length}

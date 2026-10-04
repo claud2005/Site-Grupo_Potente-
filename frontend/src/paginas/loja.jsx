@@ -1,8 +1,57 @@
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import Cabecalho from '../componentes/cabecalho'
 import './loja.css'
 
+const produtos = [
+  {
+    id: 'cipher-air-pro',
+    nome: 'CIPHER Air Pro',
+    preco: '29,99 €',
+    imagem: '/imagens/cipher-air-pro.png',
+    categoria: 'Tecnologia',
+  },
+  {
+    id: 'urban-essential-hoodie',
+    nome: 'Urban Essential Hoodie',
+    preco: '34,99 €',
+    emoji: '👕',
+    categoria: 'Moda',
+  },
+  {
+    id: 'cipher-mechanical-x',
+    nome: 'CIPHER Mechanical X',
+    preco: '59,99 €',
+    emoji: '⌨️',
+    categoria: 'Tecnologia',
+  },
+  {
+    id: 'glow-smart-lamp',
+    nome: 'Glow Smart Lamp',
+    preco: '24,99 €',
+    emoji: '💡',
+    categoria: 'Casa',
+  },
+]
+
 function Loja() {
+  const [searchParams] = useSearchParams()
+
+  const pesquisa = searchParams.get('pesquisa') || ''
+  const categoria = searchParams.get('categoria') || ''
+
+  const produtosFiltrados = produtos.filter((produto) => {
+    const correspondePesquisa =
+      produto.nome
+        .toLowerCase()
+        .includes(pesquisa.toLowerCase())
+
+    const correspondeCategoria =
+      categoria === '' ||
+      produto.categoria === categoria
+
+    return correspondePesquisa && correspondeCategoria
+  })
+
   return (
     <>
       <Cabecalho />
@@ -11,75 +60,64 @@ function Loja() {
         <section className="produtos-intro">
           <p>LOJA CIPHER</p>
 
-          <h1>Todos os produtos.</h1>
+          <h1>
+            {pesquisa
+              ? `Resultados para "${pesquisa}"`
+              : categoria
+                ? categoria
+                : 'Todos os produtos.'}
+          </h1>
 
           <span>
-            Descobre a nossa seleção de produtos.
+            {pesquisa || categoria
+              ? `${produtosFiltrados.length} produto(s) encontrado(s).`
+              : 'Descobre a nossa seleção de produtos.'}
           </span>
         </section>
 
-        <section className="produtos-grelha">
+        {produtosFiltrados.length > 0 ? (
+          <section className="produtos-grelha">
 
-          <Link
-            to="/produto/cipher-air-pro"
-            className="produto-card"
-          >
-            <div className="produto-card-imagem">
-              <img
-                src="/imagens/cipher-air-pro.png"
-                alt="CIPHER Air Pro"
-              />
-            </div>
+            {produtosFiltrados.map((produto) => (
+              <Link
+                key={produto.id}
+                to={`/produto/${produto.id}`}
+                className="produto-card"
+              >
+                <div className="produto-card-imagem">
+                  {produto.imagem ? (
+                    <img
+                      src={produto.imagem}
+                      alt={produto.nome}
+                    />
+                  ) : (
+                    <span className="produto-card-emoji">
+                      {produto.emoji}
+                    </span>
+                  )}
+                </div>
 
-            <div className="produto-card-info">
-              <h2>CIPHER Air Pro</h2>
-              <p>29,99 €</p>
-            </div>
-          </Link>
+                <div className="produto-card-info">
+                  <h2>{produto.nome}</h2>
+                  <p>{produto.preco}</p>
+                </div>
+              </Link>
+            ))}
 
-          <Link
-            to="/produto/urban-essential-hoodie"
-            className="produto-card"
-          >
-            <div className="produto-card-imagem produto-card-emoji">
-              👕
-            </div>
+          </section>
+        ) : (
+          <section className="produtos-sem-resultados">
+            <h2>Nenhum produto encontrado.</h2>
 
-            <div className="produto-card-info">
-              <h2>Urban Essential Hoodie</h2>
-              <p>34,99 €</p>
-            </div>
-          </Link>
+            <p>
+              Experimenta pesquisar por outro nome ou categoria.
+            </p>
 
-          <Link
-            to="/produto/cipher-mechanical-x"
-            className="produto-card"
-          >
-            <div className="produto-card-imagem produto-card-emoji">
-              ⌨️
-            </div>
-
-            <div className="produto-card-info">
-              <h2>CIPHER Mechanical X</h2>
-              <p>59,99 €</p>
-            </div>
-          </Link>
-
-          <Link
-            to="/produto/glow-smart-lamp"
-            className="produto-card"
-          >
-            <div className="produto-card-imagem produto-card-emoji">
-              💡
-            </div>
-
-            <div className="produto-card-info">
-              <h2>Glow Smart Lamp</h2>
-              <p>24,99 €</p>
-            </div>
-          </Link>
-
-        </section>
+            <Link to="/loja">
+              Ver todos os produtos
+            </Link>
+          </section>
+        )}
       </main>
     </>
   )

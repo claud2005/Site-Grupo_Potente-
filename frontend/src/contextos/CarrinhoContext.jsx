@@ -6,15 +6,63 @@ export function CarrinhoProvider({ children }) {
   const [carrinho, setCarrinho] = useState([])
 
   function adicionarAoCarrinho(produto) {
-    setCarrinho((carrinhoAtual) => [
-      ...carrinhoAtual,
-      produto
-    ])
+    setCarrinho((carrinhoAtual) => {
+      const produtoExistente = carrinhoAtual.find(
+        (item) => item.nome === produto.nome
+      )
+
+      if (produtoExistente) {
+        return carrinhoAtual.map((item) =>
+          item.nome === produto.nome
+            ? {
+                ...item,
+                quantidade: item.quantidade + 1
+              }
+            : item
+        )
+      }
+
+      return [
+        ...carrinhoAtual,
+        {
+          ...produto,
+          quantidade: 1
+        }
+      ]
+    })
   }
 
-  function removerDoCarrinho(index) {
+  function aumentarQuantidade(nome) {
     setCarrinho((carrinhoAtual) =>
-      carrinhoAtual.filter((_, i) => i !== index)
+      carrinhoAtual.map((produto) =>
+        produto.nome === nome
+          ? {
+              ...produto,
+              quantidade: produto.quantidade + 1
+            }
+          : produto
+      )
+    )
+  }
+
+  function diminuirQuantidade(nome) {
+    setCarrinho((carrinhoAtual) =>
+      carrinhoAtual
+        .map((produto) =>
+          produto.nome === nome
+            ? {
+                ...produto,
+                quantidade: produto.quantidade - 1
+              }
+            : produto
+        )
+        .filter((produto) => produto.quantidade > 0)
+    )
+  }
+
+  function removerDoCarrinho(nome) {
+    setCarrinho((carrinhoAtual) =>
+      carrinhoAtual.filter((produto) => produto.nome !== nome)
     )
   }
 
@@ -23,6 +71,8 @@ export function CarrinhoProvider({ children }) {
       value={{
         carrinho,
         adicionarAoCarrinho,
+        aumentarQuantidade,
+        diminuirQuantidade,
         removerDoCarrinho
       }}
     >

@@ -1,10 +1,15 @@
 import { Link } from 'react-router-dom'
-import { useCarrinho } from '../contextos/CarrinhoContext'
 import Cabecalho from '../componentes/cabecalho'
+import { useCarrinho } from '../contextos/CarrinhoContext'
 import './carrinho.css'
 
 function Carrinho() {
-  const { carrinho, removerDoCarrinho } = useCarrinho()
+  const {
+    carrinho,
+    aumentarQuantidade,
+    diminuirQuantidade,
+    removerDoCarrinho
+  } = useCarrinho()
 
   const total = carrinho.reduce((soma, produto) => {
     const preco = parseFloat(
@@ -14,7 +19,7 @@ function Carrinho() {
         .trim()
     )
 
-    return soma + preco
+    return soma + preco * produto.quantidade
   }, 0)
 
   return (
@@ -22,7 +27,6 @@ function Carrinho() {
       <Cabecalho />
 
       <main className="pagina-carrinho">
-
         <section className="carrinho-intro">
           <p>CIPHER</p>
 
@@ -41,11 +45,8 @@ function Carrinho() {
               Ainda não adicionaste nenhum produto.
             </p>
 
-            <Link
-              to="/loja"
-              className="botao-continuar"
-            >
-              Explorar produtos
+            <Link to="/loja">
+              Continuar a comprar
             </Link>
           </section>
         ) : (
@@ -53,13 +54,12 @@ function Carrinho() {
 
             <div className="carrinho-produtos">
 
-              {carrinho.map((produto, index) => (
+              {carrinho.map((produto) => (
                 <article
-                  className="carrinho-produto"
-                  key={index}
+                  className="item-carrinho"
+                  key={produto.nome}
                 >
-
-                  <div className="carrinho-produto-imagem">
+                  <div className="item-carrinho-imagem">
                     {produto.imagem ? (
                       <img
                         src={produto.imagem}
@@ -70,28 +70,53 @@ function Carrinho() {
                     )}
                   </div>
 
-                  <div className="carrinho-produto-info">
+                  <div className="item-carrinho-info">
                     <h2>{produto.nome}</h2>
 
                     <p>{produto.preco}</p>
 
+                    <div className="quantidade">
+
+                      <button
+                        onClick={() =>
+                          diminuirQuantidade(produto.nome)
+                        }
+                      >
+                        −
+                      </button>
+
+                      <span>
+                        {produto.quantidade}
+                      </span>
+
+                      <button
+                        onClick={() =>
+                          aumentarQuantidade(produto.nome)
+                        }
+                      >
+                        +
+                      </button>
+
+                    </div>
+
                     <button
-                      onClick={() => removerDoCarrinho(index)}
+                      className="remover-produto"
+                      onClick={() =>
+                        removerDoCarrinho(produto.nome)
+                      }
                     >
                       Remover
                     </button>
                   </div>
-
                 </article>
               ))}
 
             </div>
 
-            <aside className="carrinho-resumo">
-
+            <aside className="resumo-carrinho">
               <h2>Resumo</h2>
 
-              <div className="carrinho-total">
+              <div className="linha-resumo">
                 <span>Total</span>
 
                 <strong>
@@ -104,17 +129,15 @@ function Carrinho() {
               </button>
 
               <Link
-                to="/loja"
                 className="continuar-compras"
+                to="/loja"
               >
                 Continuar a comprar
               </Link>
-
             </aside>
 
           </section>
         )}
-
       </main>
     </>
   )
