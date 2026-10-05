@@ -1,0 +1,131 @@
+.pagina-entrar {
+  min-height: calc(100vh - 80px);
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f7f7f7;
+}
+
+.entrar-caixa {
+  width: 100%;
+  max-width: 500px;
+  padding: 50px;
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 24px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+}
+
+.entrar-intro {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.entrar-intro p {
+  margin: 0 0 15px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.entrar-intro h1 {
+  margin: 0 0 15px;
+  font-size: 42px;
+  line-height: 1.1;
+}
+
+.entrar-intro span {
+  font-size: 17px;
+  color: #666;
+}
+
+.formulario-entrar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.campo-entrar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo-entrar label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.campo-entrar input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 18px;
+  border: 1px solid #d8d8d8;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+  background: white;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.campo-entrar input:focus {
+  border-color: #111;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+.botao-entrar {
+  width: 100%;
+  padding: 17px;
+  border: none;
+  border-radius: 12px;
+  background: #111;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.botao-entrar:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.entrar-registo {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid #e5e5e5;
+  text-align: center;
+}
+
+.entrar-registo p {
+  margin: 0 0 8px;
+  color: #666;
+}
+
+.entrar-registo a {
+  color: #111;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.entrar-registo a:hover {
+  text-decoration: underline;
+}
+
+/* Telemóveis */
+
+@media (max-width: 600px) {
+  .pagina-entrar {
+    padding: 40px 20px;
+  }
+
+  .entrar-caixa {
+    padding: 35px 25px;
+  }
+
+  .entrar-intro h1 {
+    font-size: 34px;
+  }
+}

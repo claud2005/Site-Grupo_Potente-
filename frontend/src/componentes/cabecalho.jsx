@@ -25,6 +25,7 @@ function Cabecalho() {
 
   return (
     <header className="cabecalho">
+
       <div>
         <Link to="/" className="logo-cipher">
           <h1>CIPHER</h1>
@@ -41,7 +42,9 @@ function Cabecalho() {
       </div>
 
       <div>
-        <button>Entrar</button>
+        <button onClick={() => navigate('/entrar')}>
+          Entrar
+        </button>
 
         <Link
           to="/carrinho"
@@ -56,6 +59,7 @@ function Cabecalho() {
           )}
         </Link>
       </div>
+
     </header>
   )
 }

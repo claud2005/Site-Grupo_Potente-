@@ -1,49 +1,51 @@
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useCarrinho } from '../contextos/CarrinhoContext'
 import Cabecalho from '../componentes/cabecalho'
 import './pagina-produto.css'
 
-const produtos = {
-  'cipher-air-pro': {
-    nome: 'CIPHER Air Pro',
-    preco: '29,99 €',
-    imagem: '/imagens/cipher-air-pro.png',
-    descricao:
-      'Um produto pensado para quem procura qualidade, simplicidade e um design moderno.'
-  },
-
-  'urban-essential-hoodie': {
-    nome: 'Urban Essential Hoodie',
-    preco: '34,99 €',
-    emoji: '👕',
-    descricao:
-      'Uma peça essencial para o dia a dia, com um estilo simples e confortável.'
-  },
-
-  'cipher-mechanical-x': {
-    nome: 'CIPHER Mechanical X',
-    preco: '59,99 €',
-    emoji: '⌨️',
-    descricao:
-      'Teclado mecânico desenvolvido para uma experiência confortável e precisa.'
-  },
-
-  'glow-smart-lamp': {
-    nome: 'Glow Smart Lamp',
-    preco: '24,99 €',
-    emoji: '💡',
-    descricao:
-      'Uma iluminação moderna para dar um novo ambiente ao teu espaço.'
-  }
-}
-
 function PaginaProduto() {
   const { id } = useParams()
+
   const { adicionarAoCarrinho } = useCarrinho()
 
-  const produto = produtos[id]
+  const [produto, setProduto] = useState(null)
+  const [carregando, setCarregando] = useState(true)
+  const [erro, setErro] = useState(false)
 
-  if (!produto) {
+  useEffect(() => {
+    fetch(`http://localhost:5000/produtos/${id}`)
+      .then((resposta) => {
+        if (!resposta.ok) {
+          throw new Error('Produto não encontrado')
+        }
+
+        return resposta.json()
+      })
+      .then((dados) => {
+        setProduto(dados)
+        setCarregando(false)
+      })
+      .catch((erro) => {
+        console.error('Erro ao buscar produto:', erro)
+        setErro(true)
+        setCarregando(false)
+      })
+  }, [id])
+
+  if (carregando) {
+    return (
+      <>
+        <Cabecalho />
+
+        <main className="produto-nao-encontrado">
+          <h1>A carregar produto...</h1>
+        </main>
+      </>
+    )
+  }
+
+  if (erro || !produto) {
     return (
       <>
         <Cabecalho />
@@ -64,6 +66,7 @@ function PaginaProduto() {
       <Cabecalho />
 
       <main className="pagina-produto">
+
         <Link
           className="produto-voltar"
           to="/loja"
@@ -74,14 +77,18 @@ function PaginaProduto() {
         <section className="produto-detalhe">
 
           <div className="produto-detalhe-imagem">
+
             {produto.imagem ? (
               <img
                 src={produto.imagem}
                 alt={produto.nome}
               />
             ) : (
-              <span>{produto.emoji}</span>
+              <span className="produto-sem-imagem">
+                🛍️
+              </span>
             )}
+
           </div>
 
           <div className="produto-detalhe-info">
@@ -95,7 +102,9 @@ function PaginaProduto() {
             </h1>
 
             <p className="produto-preco">
-              {produto.preco}
+              {parseFloat(produto.preco)
+                .toFixed(2)
+                .replace('.', ',')} €
             </p>
 
             <p className="produto-descricao">
@@ -112,6 +121,7 @@ function PaginaProduto() {
           </div>
 
         </section>
+
       </main>
     </>
   )
